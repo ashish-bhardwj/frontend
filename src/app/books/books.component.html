@@ -1,0 +1,87 @@
+<app-header></app-header>
+<div class="card">
+ <div class="card-header text-center text-muted">
+  <h3> List of Books</h3>
+ </div>
+ <br>
+
+   
+
+      <br>
+  <div class="row">
+    <div class="col-md-12">
+
+      <div class="container">
+
+       
+          <div class='row'>
+              <div class='col-md-2 pull-right'>Search by:</div>
+              <div class='col-md-4'>
+                <input type='text' placeholder="Title"
+                [(ngModel)]='searchtext'/>          
+              </div>
+            </div>
+
+            <br>
+
+
+        <div class="row" *ngIf="!loading">
+          <div class="col-sm-4 mb-2" *ngFor='let book of filteredBooks | sortBy: sortByKey | searchpipe: searchtext'>
+            <div class="item">
+              <div class=" mb-r">
+                <!--Card-->
+                <div class="card card-cascade wider">
+                  <!--Card image-->
+                  <a>
+                    <div class="view overlay hm-white-slight">
+                      <img [src]="book.imageUrl"  alt="Not Available" width="200px" height="220px">
+                      <a>
+                        <div class="mask waves-effect waves-light" mdbRippleRadius></div>
+                      </a>
+                    </div>
+                  </a>
+                  <!--/.Card image-->
+                  <!--Card content-->
+                  <div class="card-body text-center no-padding">
+                    <!--Category & Title-->
+                    <a class="text-muted">
+                      <h5>{{ book.topic }}</h5>
+                    </a>
+                    <p class="card-title">
+                      <strong>
+                        <a [routerLink]="['/book', book._id]" routerLinkActive="router-link-active">{{
+                  book.bookTitle}}</a>
+                      </strong>
+                    </p>
+                    <!--Description-->
+                    <p class="card-text">{{ book.author }}
+                    </p>
+                    <!--Card footer-->
+                    <div class="card-footer">
+                      <span class="left">Rating : {{ book.rating }}</span>
+                      <span class="right">
+                          <a placement="top" mdbTooltip="Add to Cart" container="body" (click)="reserve(book)">
+                          &nbsp;  <i class="fa fa-shopping-cart"></i>
+                          </a>
+                
+                        </span>
+                      
+                    
+                    </div>
+
+                  </div>
+                  <!--/.Card content-->
+
+                </div>
+                <!--/.Card-->
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Pagination -->
+      </div>
+      <!--/.Card-->
+    </div>
+  </div>
+</div>

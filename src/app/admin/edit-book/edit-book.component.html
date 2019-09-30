@@ -1,0 +1,128 @@
+<div class="row">
+    <div class="col-sm-4" style="margin-top:0.2vw ; color:rgb(0, 0, 0)">
+        <h4>Select how do you want to add Books  :</h4>
+    </div>
+    <div class="col-sm-3" style="margin-right:2vw">
+        <select
+            id="secret" class="form-control" 
+            [ngModel]="defaultQuestion" name="secret"
+            (ngModelChange)="selectOption($even)"
+            required
+        >
+            <option value="1">Add Books from Google</option>
+            <option value="2">Add Books Manually</option>
+        </select>
+    </div>
+</div>
+
+
+<div class='card' style="margin-top:35px;margin-right: 35px;" *ngIf="!bookChange">
+        <div class='card-header text-center'>
+          <h4 class="text-muted"> Add Books from Google</h4> 
+          </div>
+          <br>
+        <div class="col-sm-8 text-center">
+         <input  id = "input" type ='text' placeholder="Book/Author Name  " #searchbox/>
+                <button  id="inputButton"  (click)="search(searchbox.value)">
+                search
+            </button>
+            <br>
+        </div>
+    <br>
+        <div class="row">
+            <div class="container-fluid">
+                    <div *ngFor="let data of APIbooks ; index as i" >
+                        <div class="row" id="card">
+                            <div class="col-sm-8" style="margin-left:90px;">
+                                <div> <h6 id="title">Title : {{data.volumeInfo.title }}</h6></div>
+                                <div id="author"><p>Author : {{data.volumeInfo.authors }}</p></div></div>  
+                            <div class="col-sm-2" >
+                                <button class="button1" (click)="show(i)">Save To Libaray</button> 
+                            </div>   
+                        </div> 
+                    </div>  
+            </div>
+        </div>
+  </div>
+
+  <br>
+<div class='card' style="margin-top:25px;margin-right: 35px;" *ngIf="bookChange">
+        <div class='card-header text-center'>
+          <h4 class="text-muted"> Add Books Manually</h4> 
+          </div>
+<br>
+        <form [formGroup]="bookform">      
+
+                <div class="row">
+                    <div class='col-md-2'></div>
+                    <div class='col-md-2'><label>Book Name</label></div>
+                    <div class='col-md-8'>
+                        <input name="bookTitle" type="text" formControlName="bookTitle" required
+                        placeholder="Book Title" [ngClass]="{ 'is-invalid': submitted && f.bookTitle.errors }">
+                        <div *ngIf="submitted && f.bookTitle.errors" class="invalid-feedback">
+                            <div *ngIf="f.bookTitle.errors.required">Book title is required</div>
+                    </div>  
+                    </div>   
+                </div>
+              
+                <div class="row">
+                    <div class='col-md-2'></div>
+                    <div class='col-md-2'> <label>Genre</label></div>
+                    <div class='col-md-8'>
+                        <input name="topic"  type="text"  formControlName="topic" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class='col-md-2'></div>
+                    <div class='col-md-2'> <label for="author">Author</label></div>
+                    <div class='col-md-8'>
+                        <input name="author" type="text"  formControlName="author" required>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class='col-md-2'></div>
+                  <div class='col-md-2'><label for="description">Description</label></div>
+                  <div class='col-md-8'>
+                      <textarea name="description" rows="2" cols="22" formControlName="description" required></textarea>
+                  </div>
+                </div>
+                <div class="row">
+                    <div class='col-md-2'></div>
+                    <div class='col-md-2'><label for="rating">Rating</label></div>
+                    <div class='col-md-8'>
+                        <input name="rating" type="text" formControlName="rating" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class='col-md-2'></div>
+                    <div class='col-md-2'><label for="count">Copies</label></div>
+                    <div class='col-md-8'>
+                        <input name="count" type="text" formControlName="count" required>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class='col-md-2'></div>
+                    <div class='col-md-2'><label>Issued</label></div>
+                    <div class='col-md-8'>
+                        <select name="issued" formControlName="issued" required>
+                            <option value="false">Available</option>
+                            <option value="true">Not Available</option>    
+                          </select> 
+                    </div>
+                </div>
+              <br>
+                <div class="row">
+                    <div class='col-md-4'></div>
+                    <div class='col-md-1'>
+                        <button type="button" class="btn btn-danger left" (click)="resetForm(bookform)">Reset</button>
+                    </div>
+                    <div class='col-md-1'>
+                        <button type="submit" class="btn btn-success right" (click)="onSubmit()">Submit</button>
+                    </div>            
+                </div>
+                <br>
+                </form>
+                
+</div>
+ 

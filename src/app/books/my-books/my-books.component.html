@@ -1,0 +1,51 @@
+<app-header></app-header>
+<div class='card'>
+  <div class='card-header'>
+      <h4 class="text-center text-muted"> {{pageTitle}}</h4>
+  </div>
+  <div class='card-body'>
+    
+     <!-- Display books --> 
+
+     <div class='row'>
+        <div class='col-md-1'>Sort by:</div>
+        <div class='col-md-2'>     
+            <select [(ngModel)]='sortByKey'>
+              <option value="bookTitle">Title</option>
+              <option value="topic">Topic</option>
+              <option value="author">Author</option>
+            </select>          
+        </div>
+      </div>
+     <br>
+
+    <div class='table-responsive'>
+      <table class='table'>
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Book Title</th>
+            <th>Genre</th>
+            <th>Author</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor='let book of books | sortBy: sortByKey | searchpipe: searchtext'>
+              <td><img [src]="book.imageUrl"  alt="Not Available" width="80px" height="100px"></td>
+              <td>{{book.bookTitle}}</td>
+              <td>{{book.topic}}</td>
+              <td>{{book.author}}</td>
+              <td>
+                <button class="btn btn-success" (click)='onReturn(book)'>Return</button>          
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div *ngIf='errorMessage'
+       class='alert alert-danger'>
+    Error: {{ errorMessage }}
+  </div>
